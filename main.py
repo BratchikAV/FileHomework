@@ -13,4 +13,20 @@ with open("КулинарнаяКнига.txt", "rt", encoding="utf-8") as file:
         file.readline()
         cook_book[dish] = ingredients
 
-print(cook_book)
+def get_shop_list_by_dishes(dishes, person_count):
+    wishlist = {}
+    for dish in dishes:
+        if dish in cook_book.keys():
+            for ingredient in cook_book[dish]:
+                name = ingredient["ingredient_name"]
+                if name not in wishlist.keys():
+                    wishlist[name] = {'measure': ingredient["measure"],
+                                               'quantity': int(ingredient["quantity"]) * person_count}
+                    continue
+                else:
+                    wishlist[name]["quantity"] += int(ingredient["quantity"]) * person_count
+
+    print(wishlist)
+
+get_shop_list_by_dishes(['Запеченный картофель', 'Омлет'], 2)
+
