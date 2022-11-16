@@ -37,27 +37,58 @@ import os
 current = os.getcwd()
 file_name_1 = "firstFile.txt"
 file_name_2 = "secondFile.txt"
+sumFile = "thirdFile.txt"    #некий суммирующий файл
 
-with open(file_name_1, "rt", encoding="utf-8") as file_1:
-    lines1 = 0
-    for _ in file_1:
-        lines1 += 1
 
-with open(file_name_2, "rt", encoding="utf-8") as file_2:
-    lines2 = 0
-    for _ in file_2:
-        lines2 += 1
-print(lines2)
+def lines(file_name):     #функция определения количества строк в файле
+    with open(file_name, "rt", encoding="utf-8") as file:
+        lines = 0
+        for _ in file:
+            lines += 1
+        return lines
 
-with open("thirdFile.txt", "wt", encoding="utf-8") as file_3:
-    file_3.write(f"{os.path.basename(file_name_2)} \n")
-    file_3.write(f"{str(lines2)} \n")
-    lines_2 = open(file_name_2, "rt", encoding="utf-8").readlines()
-    for line in lines_2:
-        file_3.write(f"{line.strip()} \n")
-    file_3.write(f"{os.path.basename(file_name_1)} \n")
-    file_3.write(f"{str(lines1)} \n")
-    lines_1 = open(file_name_1, "rt", encoding="utf-8").readlines()
-    for line in lines_1:
-        file_3.write(f"{line.strip()} \n")
 
+def end_of(file_name1, file_name2): #функция, формирующая суммирующий файл
+
+    if lines(file_name1) > lines(file_name2):
+        with open("thirdFile.txt", "wt", encoding="utf-8") as file_3:
+            file_3.write(f"{os.path.basename(file_name_1)} \n")
+            file_3.write(f"{str(lines(file_name1))} \n")
+            lines_1 = open(file_name_1, "rt", encoding="utf-8").readlines()
+            for line in lines_1:
+                file_3.write(f"{line.strip()} \n")
+            file_3.write(f"{os.path.basename(file_name_2)} \n")
+            file_3.write(f"{str(lines(file_name2))} \n")
+            lines_2 = open(file_name_2, "rt", encoding="utf-8").readlines()
+            for line in lines_2:
+                file_3.write(f"{line.strip()} \n")
+
+    elif lines(file_name1) < lines(file_name2):
+        with open("thirdFile.txt", "wt", encoding="utf-8") as file_3:
+            file_3.write(f"{os.path.basename(file_name_2)} \n")
+            file_3.write(f"{str(lines(file_name2))} \n")
+            lines_2 = open(file_name_2, "rt", encoding="utf-8").readlines()
+            for line in lines_2:
+                file_3.write(f"{line.strip()} \n")
+            file_3.write(f"{os.path.basename(file_name_1)} \n")
+            file_3.write(f"{str(lines(file_name1))} \n")
+            lines_1 = open(file_name_1, "rt", encoding="utf-8").readlines()
+            for line in lines_1:
+                file_3.write(f"{line.strip()} \n")
+
+    else:
+        with open("thirdFile.txt", "wt", encoding="utf-8") as file_3:
+            file_3.write("Количество строк в дочерних файлах одинаково! \n")
+            file_3.write(f"{os.path.basename(file_name_1)} \n")
+            file_3.write(f"{str(lines(file_name1))} \n")
+            lines_1 = open(file_name_1, "rt", encoding="utf-8").readlines()
+            for line in lines_1:
+                file_3.write(f"{line.strip()} \n")
+            file_3.write(f"{os.path.basename(file_name_2)} \n")
+            file_3.write(f"{str(lines(file_name2))} \n")
+            lines_2 = open(file_name_2, "rt", encoding="utf-8").readlines()
+            for line in lines_2:
+                file_3.write(f"{line.strip()} \n")
+
+
+end_of(file_name_1, file_name_2)
